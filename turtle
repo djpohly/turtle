@@ -137,7 +137,7 @@ class TurtleConsole(InteractiveConsole):
         except FileNotFoundError:
             fname += '.py'
             f = open(fname, 'r')
-        tc.runsource(f.read(), filename=fname, symbol='exec')
+        self.runsource(f.read(), filename=fname, symbol='exec')
 
     def runsource(self, source, filename="<input>", symbol="single"):
         try:
