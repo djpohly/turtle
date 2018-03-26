@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+
+import sys
+import tokenize
+import random
+try:
+    from io import StringIO
+except ImportError:
+    from StringIO import StringIO
+from code import InteractiveConsole
+
+TAGLINES = ["It's TURTLE TIME!!", "Turtle Power!", "Hi, I am a turtle", "Do you have your exit buddy?", \
+        "Let's turtle it up", "Launching interactive SHELL hahahaha get it??"]
+
+TURTLES = [r"""
+ __
+'_')
+ \(---.
+(( )___\
+//-\\ \\
+""", r"""
+      _
+  .-./*)
+_/___\/
+  U U
+""", r"""
+      ___
+ ,,  // \\
+(_,\/ \_/ \
+  \ \_/_\_/>
+  /_/  /_/
+""", r"""
+      _
+  ___/')
+ /= =\/
+/= = =\
+^--|--^
+""", r"""
+  _____     ____
+ /      \  |  o |
+|        |/ ___\|
+|_________/
+|_|_| |_|_|
+""", r"""
+    _____
+ oo/><><>\
+( -)><><><>
+  L|_|L|_|`
+""", r"""
+ _  .----.
+(_\/      \_,
+  'uu----uu~'
+""", r"""
+    .==.
+ __/-^-^\
+(' )^-^-^\)
+ `^UU^^UU^
+""", u"""\U0001f422\U0001f60e\n"""]
+
+
+def _translate(it):
+    for t, name, _, _, _ in it:
+        if t == tokenize.NAME and name == 'to':
+            yield t, 'def'
+            n = next(it)
+            yield n[:2]
+            n = next(it)
+            if n[:2] == (tokenize.OP, ':'):
+                yield tokenize.OP, '('
+                yield tokenize.OP, ')'
+            yield n[:2]
+        elif t == tokenize.NAME and name == 'filled':
+            yield tokenize.NAME, 'with'
+            yield tokenize.NAME, 'Filled'
+            yield tokenize.OP, '('
+            toks = []
+            n = next(it)
+            while n[:2] != (tokenize.OP, ':'):
+                toks.append(n[:2])
+                n = next(it)
+            for t in toks:
+                yield t
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ':'
+        elif t == tokenize.NAME and name == 'forever':
+            nt, nn, (row, col), _, line  = next(it)
+            if (nt, nn) != (tokenize.OP, ':'):
+                raise SyntaxError("invalid syntax", ("<input>", row, col+1, line))
+            yield tokenize.NAME, 'for'
+            yield tokenize.NAME, 'repcount'
+            yield tokenize.NAME, 'in'
+            yield tokenize.NAME, 'itertools'
+            yield tokenize.OP, '.'
+            yield tokenize.NAME, 'count'
+            yield tokenize.OP, '('
+            yield tokenize.NUMBER, '1'
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ':'
+        elif t == tokenize.NAME and name == 'repeat':
+            yield tokenize.NAME, 'for'
+            yield tokenize.NAME, 'repcount'
+            yield tokenize.NAME, 'in'
+            yield tokenize.NAME, 'range'
+            yield tokenize.OP, '('
+            yield tokenize.NUMBER, '1'
+            yield tokenize.OP, ','
+            yield tokenize.NUMBER, '1'
+            yield tokenize.OP, '+'
+            yield tokenize.OP, '('
+            toks = []
+            n = next(it)
+            while n[:2] != (tokenize.OP, ':'):
+                toks.append(n[:2])
+                n = next(it)
+            for t in toks:
+                yield t
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ':'
+        else:
+            yield t, name
+
+
+class TurtleConsole(InteractiveConsole):
+    def __init__(self, *args, **kwargs):
+        loc = kwargs.get('locals', {'__name__': '__console__', '__doc__': None})
+
+        # Add any locals we would like to have visible in the turtle context
+        loc['load'] = self.load
+
+        kwargs['locals'] = loc
+        super().__init__(*args, **kwargs)
+
+    def load(self, fname):
+        try:
+            f = open(fname, 'r')
+        except FileNotFoundError:
+            fname += '.py'
+            f = open(fname, 'r')
+        tc.runsource(f.read(), filename=fname, symbol='exec')
+
+    def runsource(self, source, filename="<input>", symbol="single"):
+        try:
+            tokens = _translate(tokenize.generate_tokens(StringIO(source).readline))
+            source = tokenize.untokenize(tokens)
+        except tokenize.TokenError:
+            # Probably just means the command isn't completed yet
+            return True
+        except SyntaxError:
+            self.showsyntaxerror(filename)
+            return False
+        return super().runsource(source, filename, symbol)
+
+
+tc = TurtleConsole()
+tc.push('from turtlesetup import *')
+
+try:
+    fn = sys.argv[1]
+except IndexError:
+    fn = None
+
+if fn is None:
+    banner = random.choice(TURTLES).strip('\n') + '\n\n' + random.choice(TAGLINES) + '\n'
+    tc.interact(banner=banner)
+else:
+    tc.push('title("Python Turtle Graphics: " + {})'.format(repr(fn)))
+    print('Running {}...'.format(fn), file=sys.stderr)
+    tc.load(fn)
+    tc.push('done()')
