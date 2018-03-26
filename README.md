@@ -50,7 +50,7 @@ conditionals).  The syntax of this block is:
         ...
 
 where *&lt;color&gt;* is a string such as `"yellow"`, `"steelblue"` or
-`"#002664"`.  (As implementation currently also permits three comma-separated
+`"#002664"`.  (The implementation currently also permits three comma-separated
 floats, although we have opted to focus on a single syntax in the classroom and
 lab.)
 
@@ -64,7 +64,7 @@ Python syntax:
 
     repeat 5:
         forward(100)
-	left(144)
+        left(144)
 
 (Rationale: `for _ in range(N)` is not immediately obvious or comprensible even
 to programmers coming from other languages, let alone to complete programming
@@ -75,7 +75,7 @@ variable `repcount`:
 
     repeat 100:
         forward(repcount)
-	right(20)
+        right(20)
 
 ### forever
 
@@ -93,8 +93,8 @@ functions without arguments.
     # Here's to you, Logo
     to square:
         repeat 4:
-	    fd(100)
-	    rt(90)
+            fd(100)
+            rt(90)
 
 (Rationale: less technical-sounding and intimidating than `def`?  Probably more
 nostalgia than anything, to be honest.)
