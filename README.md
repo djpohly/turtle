@@ -49,9 +49,10 @@ conditionals).  The syntax of this block is:
     filled <color>:
         ...
 
-where *<color>* is a string such as `"yellow"`, `"steelblue"` or `"#002664"`.
-(As implementation currently also permits three comma-separated floats,
-although we have opted to focus on a single syntax in the classroom and lab.)
+where *&lt;color&gt;* is a string such as `"yellow"`, `"steelblue"` or
+`"#002664"`.  (As implementation currently also permits three comma-separated
+floats, although we have opted to focus on a single syntax in the classroom and
+lab.)
 
 A `filled` block may not be nested inside another `filled` since the turtle
 module does not provide intuitive results when attempting to nest fills.
