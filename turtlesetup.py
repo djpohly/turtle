@@ -11,10 +11,7 @@ import rlcompleter
 readline.parse_and_bind("tab: complete")
 readline.set_completer(rlcompleter.Completer(locals()).complete)
 
-# Basic options
-mode("logo")
-resizemode("auto")
-speed(0)
+# Prep for responding to input
 listen()
 
 # New functions
@@ -32,6 +29,8 @@ __oldclearscreen = clearscreen
 def clearscreen():
     __oldclearscreen()
     isvisible()
+
+clearscreen()
 
 # Function aliases
 cs = clearscreen
