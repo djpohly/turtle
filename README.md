@@ -85,7 +85,7 @@ runaway code.
 
 ### to
 
-Logo defines new functions using a `to` statement which is similar enough to
+Logo defines new functions using a `to` statement, which is similar enough to
 Python's `def` for easy translation.  Functions with arguments are created
 using parentheses as in Python, but the parentheses may be omitted for
 functions without arguments.
@@ -96,8 +96,8 @@ functions without arguments.
             fd(100)
             rt(90)
 
-(Rationale: less technical-sounding and intimidating than `def`?  Probably more
-nostalgia than anything, to be honest.)
+(Rationale: less technical-sounding than `def`, and allows the introduction of
+procedures before having to explain parameters.)
 
 
 ## New functions
