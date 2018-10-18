@@ -70,12 +70,14 @@ Python syntax:
 to programmers coming from other languages, let alone to complete programming
 beginners.)
 
-As in Logo, a loop counter which begins counting at 1 is accessible via the
-variable `repcount`:
+As in Logo, a loop counter is accessible via the variable `repcount`:
 
     repeat 100:
         forward(repcount)
         right(20)
+
+Unlike Logo, the counter is 0-based, to avoid creating a "double standard"
+later when introducing arrays and strings.
 
 ### forever
 

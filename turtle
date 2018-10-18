@@ -93,7 +93,7 @@ def _translate(it):
             yield tokenize.OP, '.'
             yield tokenize.NAME, 'count'
             yield tokenize.OP, '('
-            yield tokenize.NUMBER, '1'
+            yield tokenize.NUMBER, '0'
             yield tokenize.OP, ')'
             yield tokenize.OP, ':'
         elif t == tokenize.NAME and name == 'repeat':
@@ -102,11 +102,6 @@ def _translate(it):
             yield tokenize.NAME, 'in'
             yield tokenize.NAME, 'range'
             yield tokenize.OP, '('
-            yield tokenize.NUMBER, '1'
-            yield tokenize.OP, ','
-            yield tokenize.NUMBER, '1'
-            yield tokenize.OP, '+'
-            yield tokenize.OP, '('
             toks = []
             n = next(it)
             while n[:2] != (tokenize.OP, ':'):
@@ -114,7 +109,6 @@ def _translate(it):
                 n = next(it)
             for t in toks:
                 yield t
-            yield tokenize.OP, ')'
             yield tokenize.OP, ')'
             yield tokenize.OP, ':'
         else:
