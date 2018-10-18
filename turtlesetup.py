@@ -40,6 +40,32 @@ bg = bgcolor
 ps = pensize
 arc = circle
 
+# Overrides for "degree mode"
+acos_rad = acos
+asin_rad = asin
+atan_rad = atan
+atan2_rad = atan2
+
+def acos(x):
+    return degrees(acos_rad(x))
+def asin(x):
+    return degrees(asin_rad(x))
+def atan(x):
+    return degrees(atan_rad(x))
+def atan2(y, x):
+    return degrees(atan2_rad(y, x))
+
+cos_rad = cos
+sin_rad = sin
+tan_rad = tan
+
+def cos(x):
+    return cos_rad(radians(x))
+def sin(x):
+    return sin_rad(radians(x))
+def tan(x):
+    return tan_rad(radians(x))
+
 # Handlers for new blocks
 class Filled:
     def __init__(self, *args):
