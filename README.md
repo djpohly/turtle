@@ -85,6 +85,17 @@ The `forever` loop from Logo was also ported, though we have not introduced it
 in teaching.  Ctrl-C may still be used to interrupt these loops or other
 runaway code.
 
+### until
+
+The `until` keyword has been introduced as a synonym for `while not` which is
+more meaningful to programming beginners:
+
+    deg = 0
+    until deg >= 360:
+        fd(10)
+	rt(24)
+	deg += 24
+
 ### to
 
 Logo defines new functions using a `to` statement, which is similar enough to

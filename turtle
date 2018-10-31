@@ -111,6 +111,19 @@ def _translate(it):
                 yield t
             yield tokenize.OP, ')'
             yield tokenize.OP, ':'
+        elif t == tokenize.NAME and name == 'until':
+            yield tokenize.NAME, 'while'
+            yield tokenize.NAME, 'not'
+            yield tokenize.OP, '('
+            toks = []
+            n = next(it)
+            while n[:2] != (tokenize.OP, ':'):
+                toks.append(n[:2])
+                n = next(it)
+            for t in toks:
+                yield t
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ':'
         else:
             yield t, name
 
