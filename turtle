@@ -145,17 +145,19 @@ class TurtleConsole(InteractiveConsole):
             fname += '.py'
             f = open(fname, 'r')
         source = f.read()
-        if self.runsource(source, filename=fname, symbol='exec'):
-            # Expected more input...
-            raise SyntaxError("unexpected EOF while parsing", (fname, len(source.splitlines()) + 1, 1, ''))
+        self.runsource(source, filename=fname, symbol='exec')
 
     def runsource(self, source, filename="<input>", symbol="single"):
         try:
-            tokens = _translate(tokenize.generate_tokens(StringIO(source).readline))
-            source = tokenize.untokenize(tokens)
-        except tokenize.TokenError:
-            # Probably just means the command isn't completed yet
-            return True
+            try:
+                tokens = _translate(tokenize.generate_tokens(StringIO(source).readline))
+                source = tokenize.untokenize(tokens)
+            except tokenize.TokenError as e:
+                # "exec" must be a complete command
+                if symbol == "exec":
+                    raise SyntaxError("unexpected EOF while parsing", (filename, len(source.splitlines()) + 1, 1, '')) from None
+                # Otherwise, this probably just means the command isn't completed yet
+                return True
         except SyntaxError:
             self.showsyntaxerror(filename)
             return False
