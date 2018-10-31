@@ -93,8 +93,8 @@ more meaningful to programming beginners:
     deg = 0
     until deg >= 360:
         fd(10)
-	rt(24)
-	deg += 24
+        rt(24)
+        deg += 24
 
 ### to
 
