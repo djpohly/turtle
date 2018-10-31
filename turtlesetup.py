@@ -22,7 +22,7 @@ def randomcolor():
     return _random.random(), _random.random(), _random.random()
 
 def wait(tenths):
-    time.sleep(tenths/10)
+    time.sleep(tenths/10.0)
 
 # Fix turtle redrawing on clearscreen()
 __oldclearscreen = clearscreen
