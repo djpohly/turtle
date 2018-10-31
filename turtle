@@ -144,7 +144,10 @@ class TurtleConsole(InteractiveConsole):
         except FileNotFoundError:
             fname += '.py'
             f = open(fname, 'r')
-        self.runsource(f.read(), filename=fname, symbol='exec')
+        source = f.read()
+        if self.runsource(source, filename=fname, symbol='exec'):
+            # Expected more input...
+            raise SyntaxError("unexpected EOF while parsing", (fname, len(source.splitlines()) + 1, 1, ''))
 
     def runsource(self, source, filename="<input>", symbol="single"):
         try:
