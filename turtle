@@ -74,10 +74,13 @@ def _translate(it):
             yield tokenize.NAME, 'Filled'
             yield tokenize.OP, '('
             toks = []
-            n = next(it)
-            while n[:2] != (tokenize.OP, ':'):
-                toks.append(n[:2])
+            try:
                 n = next(it)
+                while n[:2] != (tokenize.OP, ':'):
+                    toks.append(n[:2])
+                    n = next(it)
+            except StopIteration:
+                pass
             for t in toks:
                 yield t
             yield tokenize.OP, ')'
@@ -103,10 +106,13 @@ def _translate(it):
             yield tokenize.NAME, 'range'
             yield tokenize.OP, '('
             toks = []
-            n = next(it)
-            while n[:2] != (tokenize.OP, ':'):
-                toks.append(n[:2])
+            try:
                 n = next(it)
+                while n[:2] != (tokenize.OP, ':'):
+                    toks.append(n[:2])
+                    n = next(it)
+            except StopIteration:
+                pass
             for t in toks:
                 yield t
             yield tokenize.OP, ')'
@@ -116,10 +122,13 @@ def _translate(it):
             yield tokenize.NAME, 'not'
             yield tokenize.OP, '('
             toks = []
-            n = next(it)
-            while n[:2] != (tokenize.OP, ':'):
-                toks.append(n[:2])
+            try:
                 n = next(it)
+                while n[:2] != (tokenize.OP, ':'):
+                    toks.append(n[:2])
+                    n = next(it)
+            except StopIteration:
+                pass
             for t in toks:
                 yield t
             yield tokenize.OP, ')'
