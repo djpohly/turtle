@@ -82,3 +82,12 @@ class Filled:
             fillcolor(*self.color)
         end_fill()
         fillcolor(oldfill)
+
+class Fast:
+    def __enter__(self, *args):
+        self.oldtracer = tracer()
+        tracer(0)
+
+    def __exit__(self, t, val, tb):
+        update()
+        tracer(self.oldtracer)

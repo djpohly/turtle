@@ -85,6 +85,22 @@ def _translate(it):
                 yield t
             yield tokenize.OP, ')'
             yield tokenize.OP, ':'
+        elif t == tokenize.NAME and name == 'fast':
+            yield tokenize.NAME, 'with'
+            yield tokenize.NAME, 'Fast'
+            yield tokenize.OP, '('
+            toks = []
+            try:
+                n = next(it)
+                while n[:2] != (tokenize.OP, ':'):
+                    toks.append(n[:2])
+                    n = next(it)
+            except StopIteration:
+                pass
+            for t in toks:
+                yield t
+            yield tokenize.OP, ')'
+            yield tokenize.OP, ':'
         elif t == tokenize.NAME and name == 'forever':
             nt, nn, (row, col), _, line  = next(it)
             if (nt, nn) != (tokenize.OP, ':'):
