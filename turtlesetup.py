@@ -97,3 +97,9 @@ class Fast:
     def __exit__(self, t, val, tb):
         update()
         tracer(self.oldtracer)
+
+# For on-computer exam
+try:
+    from questions import QUESTIONS
+except:
+    pass

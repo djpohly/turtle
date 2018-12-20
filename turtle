@@ -159,6 +159,7 @@ class TurtleConsole(InteractiveConsole):
 
         # Add any locals we would like to have visible in the turtle context
         loc['load'] = self.load
+        loc['exam'] = self.exam
 
         kwargs['locals'] = loc
         super().__init__(*args, **kwargs)
@@ -171,6 +172,11 @@ class TurtleConsole(InteractiveConsole):
             f = open(fname, 'r')
         source = f.read()
         self.runsource(source, filename=fname, symbol='exec')
+
+    def exam(self, n):
+        n = int(n)
+        self.load("exam" + str(n))
+        self.runsource("QUESTIONS[" + str(n) + "].run(globals())")
 
     def runsource(self, source, filename="<input>", symbol="single"):
         try:
