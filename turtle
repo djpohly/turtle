@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import sys
+import os
+import os.path
 import tokenize
 import random
 try:
@@ -8,6 +10,9 @@ try:
 except ImportError:
     from StringIO import StringIO
 from code import InteractiveConsole
+
+# Load scripts by default from the script's (or link's) directory
+os.chdir(os.path.dirname(__file__))
 
 TAGLINES = ["It's TURTLE TIME!!", "Turtle Power!", "Hi, I am a turtle", "Do you have your exit buddy?", \
         "Let's turtle it up", "Launching interactive SHELL hahahaha get it??"]
